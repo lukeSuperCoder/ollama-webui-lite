@@ -8,7 +8,7 @@
 	const saveDefaultModel = () => {
 		settings.set({ ...$settings, models: selectedModels });
 		localStorage.setItem("settings", JSON.stringify($settings));
-		toast.success("Default model updated");
+		toast.success("默认模型已更新");
 	};
 </script>
 
@@ -21,7 +21,7 @@
 				bind:value={selectedModel}
 				{disabled}
 			>
-				<option class=" text-gray-700" value="" selected>Select a model</option>
+				<option class=" text-gray-700" value="" selected>选择一个模型</option>
 
 				{#each $models as model}
 					{#if model.name === "hr"}
@@ -113,5 +113,5 @@
 </div>
 
 <div class="text-left mt-1.5 text-xs text-gray-500">
-	<button on:click={saveDefaultModel}> Set as default</button>
+	<button on:click={saveDefaultModel}> 设置为默认</button>
 </div>

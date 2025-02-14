@@ -4,7 +4,7 @@
 	import { goto } from "$app/navigation";
 	import { chatId, db } from "$lib/stores";
 
-	export let title: string = "Ollama Web UI";
+	export let title: string = "海洋卫士AI客服";
 </script>
 
 <nav
@@ -17,7 +17,7 @@
 				<button
 					class=" cursor-pointer p-1 flex dark:hover:bg-gray-700 rounded-lg transition"
 					on:click={async () => {
-						console.log("newChat");
+						console.log("新聊天");
 						goto("/");
 						await chatId.set(uuidv4());
 					}}
@@ -40,7 +40,7 @@
 				</button>
 			</div>
 			<div class=" flex-1 self-center font-medium text-ellipsis whitespace-nowrap overflow-hidden">
-				{title != "" ? title : "Ollama Web UI"}
+				{title != "" ? title : "海洋卫士AI客服"}
 			</div>
 		</div>
 	</div>

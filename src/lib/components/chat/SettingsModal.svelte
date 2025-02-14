@@ -19,15 +19,15 @@
 
 	let selectedTab = "general";
 
-	// General
+	// 一般设置
 	let API_BASE_URL = OLLAMA_API_BASE_URL;
 	let theme = "dark";
 	let notificationEnabled = false;
 
-	// Advanced
+	// 高级设置
 	let requestFormat = "";
 	let options = {
-		// Advanced
+		// 高级设置
 		seed: 0,
 		temperature: "",
 		repeat_penalty: "",
@@ -42,7 +42,7 @@
 		num_ctx: ""
 	};
 
-	// Models
+	// 模型
 	let modelTag = "";
 	let deleteModelTag = "";
 	let digest = "";
@@ -55,7 +55,7 @@
 		const _models = await getModels(API_BASE_URL, "ollama");
 
 		if (_models.length > 0) {
-			toast.success("Server connection verified");
+			toast.success("服务器连接已验证");
 			await models.set(_models);
 
 			saveSettings({
@@ -129,7 +129,7 @@
 
 								if (data.status === "success") {
 									const notification = new Notification(`Ollama`, {
-										body: `Model '${modelTag}' has been successfully downloaded.`,
+										body: `模型 '${modelTag}' 已成功下载。`,
 										icon: "/favicon.png"
 									});
 								}
@@ -193,7 +193,7 @@
 						if (data.status) {
 						}
 					} else {
-						toast.success(`Deleted ${deleteModelTag}`);
+						toast.success(`已删除 ${deleteModelTag}`);
 					}
 				}
 			} catch (error) {
@@ -224,7 +224,7 @@
 				if ("detail" in error) {
 					toast.error(error.detail);
 				} else {
-					toast.error("Server connection failed");
+					toast.error("服务器连接失败");
 				}
 				return null;
 			});
@@ -256,7 +256,7 @@
 <Modal bind:show>
 	<div>
 		<div class=" flex justify-between dark:text-gray-300 px-5 py-4">
-			<div class=" text-lg font-medium self-center">Settings</div>
+			<div class=" text-lg font-medium self-center">设置</div>
 			<button
 				class="self-center"
 				on:click={() => {
@@ -299,12 +299,12 @@
 						>
 							<path
 								fill-rule="evenodd"
-								d="M8.34 1.804A1 1 0 019.32 1h1.36a1 1 0 01.98.804l.295 1.473c.497.144.971.342 1.416.587l1.25-.834a1 1 0 011.262.125l.962.962a1 1 0 01.125 1.262l-.834 1.25c.245.445.443.919.587 1.416l1.473.294a1 1 0 01.804.98v1.361a1 1 0 01-.804.98l-1.473.295a6.95 6.95 0 01-.587 1.416l.834 1.25a1 1 0 01-.125 1.262l-.962.962a1 1 0 01-1.262.125l-1.25-.834a6.953 6.953 0 01-1.416.587l-.294 1.473a1 1 0 01-.98.804H9.32a1 1 0 01-.98-.804l-.295-1.473a6.957 6.957 0 01-1.416-.587l-1.25.834a1 1 0 01-1.262-.125l-.962-.962a1 1 0 01-.125-1.262l.834-1.25a6.957 6.957 0 01-.587-1.416l-1.473-.294A1 1 0 011 10.68V9.32a1 1 0 01.804-.98l1.473-.295c.144-.497.342-.971.587-1.416l-.834-1.25a1 1 0 01.125-1.262l.962-.962A1 1 0 015.38 3.03l1.25.834a6.957 6.957 0 011.416-.587l.294-1.473zM13 10a3 3 0 11-6 0 3 3 0 016 0z"
+								d="M8.34 1.804A1 1 0 009.32 1h1.36a1 1 0 01.98.804l.295 1.473c.497.144.971.342 1.416.587l1.25-.834a1 1 0 011.262.125l.962.962a1 1 0 01.125 1.262l-.834 1.25c.245.445.443.919.587 1.416l1.473.294a1 1 0 01.804.98v1.361a1 1 0 01-.804.98l-1.473.295a6.95 6.95 0 01-.587 1.416l.834 1.25a1 1 0 01-.125 1.262l-.962.962a1 1 0 01-1.262.125l-1.25-.834a6.953 6.953 0 01-1.416.587l-.294 1.473a1 1 0 01-.98.804H9.32a1 1 0 01-.98-.804l-.295-1.473a6.957 6.957 0 01-1.416-.587l-1.25.834a1 1 0 01-1.262-.125l-.962-.962a1 1 0 01-.125-1.262l.834-1.25a6.957 6.957 0 01-.587-1.416l-1.473-.294A1 1 0 011 10.68V9.32a1 1 0 01.804-.98l1.473-.295c.144-.497.342-.971.587-1.416l-.834-1.25a1 1 0 01.125-1.262l.962-.962A1 1 0 015.38 3.03l1.25.834a6.957 6.957 0 011.416-.587l.294-1.473zM13 10a3 3 0 11-6 0 3 3 0 016 0z"
 								clip-rule="evenodd"
 							/>
 						</svg>
 					</div>
-					<div class=" self-center">General</div>
+					<div class=" self-center">一般</div>
 				</button>
 
 				<button
@@ -328,7 +328,7 @@
 							/>
 						</svg>
 					</div>
-					<div class=" self-center">Advanced</div>
+					<div class=" self-center">高级</div>
 				</button>
 
 				<button
@@ -354,7 +354,7 @@
 							/>
 						</svg>
 					</div>
-					<div class=" self-center">Models</div>
+					<div class=" self-center">模型</div>
 				</button>
 
 				<button
@@ -380,17 +380,17 @@
 							/>
 						</svg>
 					</div>
-					<div class=" self-center">About</div>
+					<div class=" self-center">关于</div>
 				</button>
 			</div>
 			<div class="flex-1 md:min-h-[340px]">
 				{#if selectedTab === "general"}
 					<div class="flex flex-col space-y-3">
 						<div>
-							<div class=" mb-1 text-sm font-medium">WebUI Settings</div>
+							<div class=" mb-1 text-sm font-medium">WebUI 设置</div>
 
 							<div class=" py-0.5 flex w-full justify-between">
-								<div class=" self-center text-xs font-medium">Theme</div>
+								<div class=" self-center text-xs font-medium">主题</div>
 
 								<button
 									class="p-1 px-3 text-xs flex rounded transition"
@@ -412,7 +412,7 @@
 											/>
 										</svg>
 
-										<span class="ml-2 self-center"> Dark </span>
+										<span class="ml-2 self-center"> 暗黑 </span>
 									{:else}
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
@@ -424,7 +424,7 @@
 												d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 2zM10 15a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 15zM10 7a3 3 0 100 6 3 3 0 000-6zM15.657 5.404a.75.75 0 10-1.06-1.06l-1.061 1.06a.75.75 0 001.06 1.06l1.06-1.06zM6.464 14.596a.75.75 0 10-1.06-1.06l-1.06 1.06a.75.75 0 001.06 1.06l1.06-1.06zM18 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0118 10zM5 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 015 10zM14.596 15.657a.75.75 0 001.06-1.06l-1.06-1.061a.75.75 0 10-1.06 1.06l1.06 1.06zM5.404 6.464a.75.75 0 001.06-1.06l-1.06-1.06a.75.75 0 10-1.061 1.06l1.06 1.06z"
 											/>
 										</svg>
-										<span class="ml-2 self-center"> Light </span>
+										<span class="ml-2 self-center"> 明亮 </span>
 									{/if}
 								</button>
 							</div>
@@ -432,12 +432,12 @@
 
 						<hr class=" dark:border-gray-700" />
 						<div>
-							<div class=" mb-2.5 text-sm font-medium">Ollama Server URL</div>
+							<div class=" mb-2.5 text-sm font-medium">Ollama 服务器 URL</div>
 							<div class="flex w-full">
 								<div class="flex-1 mr-2">
 									<input
 										class="w-full rounded py-2 px-4 text-sm dark:text-gray-300 dark:bg-gray-800 outline-none"
-										placeholder="Enter URL (e.g. http://localhost:11434/api)"
+										placeholder="输入 URL (例如 http://localhost:11434/api)"
 										bind:value={API_BASE_URL}
 									/>
 								</div>
@@ -463,12 +463,12 @@
 							</div>
 
 							<div class="mt-2 text-xs text-gray-400 dark:text-gray-500">
-								Trouble accessing Ollama? <a
+								访问 Ollama 时遇到问题？ <a
 									class=" text-gray-500 dark:text-gray-300 font-medium"
 									href="https://github.com/ollama-webui/ollama-webui#troubleshooting"
 									target="_blank"
 								>
-									Click here for help.
+									点击这里获取帮助。
 								</a>
 							</div>
 						</div>
@@ -485,21 +485,21 @@
 									show = false;
 								}}
 							>
-								Save
+								保存
 							</button>
 						</div>
 					</div>
 				{:else if selectedTab === "advanced"}
 					<div class="flex flex-col h-full justify-between text-sm">
 						<div class=" space-y-3 pr-1.5 overflow-y-scroll max-h-72">
-							<div class=" text-sm font-medium">Parameters</div>
+							<div class=" text-sm font-medium">参数</div>
 
 							<Advanced bind:options />
 							<hr class=" dark:border-gray-700" />
 
 							<div>
 								<div class=" py-1 flex w-full justify-between">
-									<div class=" self-center text-sm font-medium">Request Mode</div>
+									<div class=" self-center text-sm font-medium">请求模式</div>
 
 									<button
 										class="p-1 px-3 text-xs flex rounded transition"
@@ -508,18 +508,8 @@
 										}}
 									>
 										{#if requestFormat === ""}
-											<span class="ml-2 self-center"> Default </span>
+											<span class="ml-2 self-center"> 默认 </span>
 										{:else if requestFormat === "json"}
-											<!-- <svg
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 20 20"
-												fill="currentColor"
-												class="w-4 h-4 self-center"
-											>
-												<path
-													d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 2zM10 15a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 15zM10 7a3 3 0 100 6 3 3 0 000-6zM15.657 5.404a.75.75 0 10-1.06-1.06l-1.061 1.06a.75.75 0 001.06 1.06l1.06-1.06zM6.464 14.596a.75.75 0 10-1.06-1.06l-1.06 1.06a.75.75 0 001.06 1.06l1.06-1.06zM18 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0118 10zM5 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 015 10zM14.596 15.657a.75.75 0 001.06-1.06l-1.06-1.061a.75.75 0 10-1.06 1.06l1.06 1.06zM5.404 6.464a.75.75 0 001.06-1.06l-1.06-1.06a.75.75 0 10-1.061 1.06l1.06 1.06z"
-												/>
-											</svg> -->
 											<span class="ml-2 self-center"> JSON </span>
 										{/if}
 									</button>
@@ -552,19 +542,19 @@
 									show = false;
 								}}
 							>
-								Save
+								保存
 							</button>
 						</div>
 					</div>
 				{:else if selectedTab === "models"}
 					<div class="flex flex-col space-y-3 text-sm mb-10">
 						<div>
-							<div class=" mb-2.5 text-sm font-medium">Pull a model</div>
+							<div class=" mb-2.5 text-sm font-medium">拉取模型</div>
 							<div class="flex w-full">
 								<div class="flex-1 mr-2">
 									<input
 										class="w-full rounded py-2 px-4 text-sm dark:text-gray-300 dark:bg-gray-800 outline-none"
-										placeholder="Enter model tag (e.g. mistral:7b)"
+										placeholder="输入模型标签 (例如 mistral:7b)"
 										bind:value={modelTag}
 									/>
 								</div>
@@ -591,16 +581,16 @@
 							</div>
 
 							<div class="mt-2 text-xs text-gray-400 dark:text-gray-500">
-								To access the available model names for downloading, <a
+								要访问可下载的模型名称，请 <a
 									class=" text-gray-500 dark:text-gray-300 font-medium"
 									href="https://ollama.ai/library"
-									target="_blank">click here.</a
+									target="_blank">点击这里。</a
 								>
 							</div>
 
 							{#if pullProgress !== null}
 								<div class="mt-2">
-									<div class=" mb-2 text-xs">Pull Progress</div>
+									<div class=" mb-2 text-xs">拉取进度</div>
 									<div class="w-full rounded-full dark:bg-gray-800">
 										<div
 											class="dark:bg-gray-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
@@ -618,16 +608,16 @@
 						<hr class=" dark:border-gray-700" />
 
 						<div>
-							<div class=" mb-2.5 text-sm font-medium">Delete a model</div>
+							<div class=" mb-2.5 text-sm font-medium">删除模型</div>
 							<div class="flex w-full">
 								<div class="flex-1 mr-2">
 									<select
 										class="w-full rounded py-2 px-4 text-sm dark:text-gray-300 dark:bg-gray-800 outline-none"
 										bind:value={deleteModelTag}
-										placeholder="Select a model"
+										placeholder="选择一个模型"
 									>
 										{#if !deleteModelTag}
-											<option value="" disabled selected>Select a model</option>
+											<option value="" disabled selected>选择一个模型</option>
 										{/if}
 										{#each $models.filter((m) => m.size != null) as model}
 											<option value={model.name} class="bg-gray-100 dark:bg-gray-700"
@@ -662,7 +652,7 @@
 					<div class="flex flex-col h-full justify-between space-y-3 text-sm mb-6">
 						<div class=" space-y-3">
 							<div>
-								<div class=" mb-2.5 text-sm font-medium">Ollama Web UI Version</div>
+								<div class=" mb-2.5 text-sm font-medium">Ollama Web UI 版本</div>
 								<div class="flex w-full">
 									<div class="flex-1 text-xs text-gray-700 dark:text-gray-200">
 										{WEB_UI_VERSION}
@@ -673,7 +663,7 @@
 							<hr class=" dark:border-gray-700" />
 
 							<div>
-								<div class=" mb-2.5 text-sm font-medium">Ollama Version</div>
+								<div class=" mb-2.5 text-sm font-medium">Ollama 版本</div>
 								<div class="flex w-full">
 									<div class="flex-1 text-xs text-gray-700 dark:text-gray-200">
 										{$info?.ollama?.version ?? "N/A"}
@@ -684,7 +674,7 @@
 							<hr class=" dark:border-gray-700" />
 
 							<div class="mt-2 text-xs text-gray-400 dark:text-gray-500">
-								Created by <a
+								创建者 <a
 									class=" text-gray-500 dark:text-gray-300 font-medium"
 									href="https://github.com/tjbck"
 									target="_blank">Timothy J. Baek</a
@@ -695,7 +685,7 @@
 								<a href="https://github.com/ollama-webui/ollama-webui">
 									<img
 										alt="Github Repo"
-										src="https://img.shields.io/github/stars/ollama-webui/ollama-webui?style=social&label=Star us on Github"
+										src="https://img.shields.io/github/stars/ollama-webui/ollama-webui?style=social&label=在 Github 上给我们加星"
 									/>
 								</a>
 							</div>

@@ -32,27 +32,27 @@
 			for (const message of messages) {
 				if (message.info) {
 					tippy(`#info-${message.id}`, {
-						content: `<span class="text-xs">token/s: ${
+						content: `<span class="text-xs">令牌数: ${
 							`${
 								Math.round(
 									((message.info.eval_count ?? 0) / (message.info.eval_duration / 1000000000)) * 100
 								) / 100
-							} tokens` ?? "N/A"
+							} 令牌` ?? "N/A"
 						}<br/>
-						total_duration: ${
+						总时长: ${
 							Math.round(((message.info.total_duration ?? 0) / 1000000) * 100) / 100 ?? "N/A"
-						}ms<br/>
-						load_duration: ${
+						}毫秒<br/>
+						加载时长: ${
 							Math.round(((message.info.load_duration ?? 0) / 1000000) * 100) / 100 ?? "N/A"
-						}ms<br/>
-						prompt_eval_count: ${message.info.prompt_eval_count ?? "N/A"}<br/>
-						prompt_eval_duration: ${
+						}毫秒<br/>
+						提示评估次数: ${message.info.prompt_eval_count ?? "N/A"}<br/>
+						提示评估时长: ${
 							Math.round(((message.info.prompt_eval_duration ?? 0) / 1000000) * 100) / 100 ?? "N/A"
-						}ms<br/>
-						eval_count: ${message.info.eval_count ?? "N/A"}<br/>
-						eval_duration: ${
+						}毫秒<br/>
+						评估次数: ${message.info.eval_count ?? "N/A"}<br/>
+						评估时长: ${
 							Math.round(((message.info.eval_duration ?? 0) / 1000000) * 100) / 100 ?? "N/A"
-						}ms</span>`,
+						}毫秒</span>`,
 						allowHTML: true
 					});
 				}
@@ -68,11 +68,11 @@
 	}
 
 	const createCopyCodeBlockButton = () => {
-		// use a class selector if available
+		// 使用类选择器（如果可用）
 		let blocks = document.querySelectorAll("pre");
 
 		blocks.forEach((block) => {
-			// only add button if browser supports Clipboard API
+			// 仅在浏览器支持剪贴板 API 时添加按钮
 
 			if (navigator.clipboard && block.childNodes.length < 2 && block.id !== "user-message") {
 				let code = block.querySelector("code");
@@ -99,7 +99,7 @@
 				langDiv.style.fontSize = "0.75rem";
 
 				let button = document.createElement("button");
-				button.textContent = "Copy Code";
+				button.textContent = "复制代码";
 				button.style.background = "none";
 				button.style.fontSize = "0.75rem";
 				button.style.border = "none";
@@ -112,10 +112,6 @@
 				topBarDiv.appendChild(button);
 
 				block.prepend(topBarDiv);
-
-				// button.addEventListener('click', async () => {
-				// 	await copyCode(block, button);
-				// });
 			}
 		});
 
@@ -125,30 +121,25 @@
 
 			await navigator.clipboard.writeText(text);
 
-			// visual feedback that task is completed
-			button.innerText = "Copied!";
+			// 视觉反馈任务已完成
+			button.innerText = "已复制！";
 
 			setTimeout(() => {
-				button.innerText = "Copy Code";
+				button.innerText = "复制代码";
 			}, 1000);
 		}
 	};
 
 	const renderLatex = () => {
 		let chatMessageElements = document.getElementsByClassName("chat-assistant");
-		// let lastChatMessageElement = chatMessageElements[chatMessageElements.length - 1];
 
 		for (const element of chatMessageElements) {
 			auto_render(element, {
-				// customised options
-				// • auto-render specific keys, e.g.:
 				delimiters: [
 					{ left: "$$", right: "$$", display: true },
-					// { left: '$', right: '$', display: false },
 					{ left: "\\(", right: "\\)", display: true },
 					{ left: "\\[", right: "\\]", display: true }
 				],
-				// • rendering keys, e.g.:
 				throwOnError: false
 			});
 		}
@@ -159,7 +150,7 @@
 			var textArea = document.createElement("textarea");
 			textArea.value = text;
 
-			// Avoid scrolling to bottom
+			// 避免滚动到底部
 			textArea.style.top = "0";
 			textArea.style.left = "0";
 			textArea.style.position = "fixed";
@@ -170,10 +161,10 @@
 
 			try {
 				var successful = document.execCommand("copy");
-				var msg = successful ? "successful" : "unsuccessful";
-				console.log("Fallback: Copying text command was " + msg);
+				var msg = successful ? "成功" : "失败";
+				console.log("后备: 复制文本命令是 " + msg);
 			} catch (err) {
-				console.error("Fallback: Oops, unable to copy", err);
+				console.error("后备: 哦，无法复制", err);
 			}
 
 			document.body.removeChild(textArea);
@@ -181,17 +172,16 @@
 		}
 		navigator.clipboard.writeText(text).then(
 			function () {
-				console.log("Async: Copying to clipboard was successful!");
-				toast.success("Copying to clipboard was successful!");
+				console.log("异步: 复制到剪贴板成功！");
+				toast.success("复制到剪贴板成功！");
 			},
 			function (err) {
-				console.error("Async: Could not copy text: ", err);
+				console.error("异步: 无法复制文本: ", err);
 			}
 		);
 	};
 
 	const editMessageHandler = async (messageId) => {
-		// let editMessage = history.messages[messageId];
 		history.messages[messageId].edit = true;
 		history.messages[messageId].originalContent = history.messages[messageId].content;
 		history.messages[messageId].editedContent = history.messages[messageId].content;
@@ -348,7 +338,7 @@
 			/>
 		</div>
 		<div class=" mt-2 text-2xl text-gray-800 dark:text-gray-100 font-semibold">
-			How can I help you today?
+			今天我能帮您什么？
 		</div>
 	</div>
 {:else}
@@ -361,14 +351,14 @@
 							<img
 								src="/user.png"
 								class=" max-w-[28px] object-cover rounded-full"
-								alt="User profile"
+								alt="用户头像"
 								draggable="false"
 							/>
 						{:else}
 							<img
 								src="/favicon.png"
 								class=" max-w-[28px] object-cover rounded-full"
-								alt="Ollama profile"
+								alt="Ollama头像"
 								draggable="false"
 							/>
 						{/if}
@@ -377,7 +367,7 @@
 					<div class="w-full overflow-hidden">
 						<div class=" self-center font-bold mb-0.5">
 							{#if message.role === "user"}
-								You
+								您
 							{:else}
 								Ollama <span class=" text-gray-500 text-sm font-medium"
 									>{message.model ? ` ${message.model}` : ""}</span
@@ -417,7 +407,7 @@
 													{#if file.type === "image"}
 														<img
 															src={file.url}
-															alt="input"
+															alt="输入"
 															class=" max-h-96 rounded-lg"
 															draggable="false"
 														/>
@@ -445,7 +435,7 @@
 														confirmEditMessage(message.id);
 													}}
 												>
-													Save & Submit
+													保存并提交
 												</button>
 
 												<button
@@ -454,7 +444,7 @@
 														cancelEditMessage(message.id);
 													}}
 												>
-													Cancel
+													取消
 												</button>
 											</div>
 										</div>
@@ -631,7 +621,7 @@
 															confirmEditResponseMessage(message.id);
 														}}
 													>
-														Save
+														保存
 													</button>
 
 													<button
@@ -640,7 +630,7 @@
 															cancelEditMessage(message.id);
 														}}
 													>
-														Cancel
+														取消
 													</button>
 												</div>
 											</div>

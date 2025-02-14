@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev --host --port 3000",
+		"dev": "vite dev --host --port 3100",
 		"build": "vite build",
 		"fmt": "npm run prettier:svelte && npm run prettier",
 		"prettier:svelte": "npx -p prettier@2 -- prettier --plugin-search-dir . --write .",
