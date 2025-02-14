@@ -243,7 +243,7 @@
 				}
 
 				await $db.updateChatById(_chatId, {
-					title: title === "" ? "New Chat" : title,
+					title: title === "" ? "新聊天" : title,
 					models: selectedModels,
 					options: {
 						seed: $settings.seed ?? undefined,
@@ -270,12 +270,12 @@
 					responseMessage.content = error.error;
 				}
 			} else {
-				toast.error(`Uh-oh! There was an issue connecting to Ollama.`);
-				responseMessage.content = `Uh-oh! There was an issue connecting to Ollama.`;
+				toast.error(`连接出现了点问题`);
+				responseMessage.content = `连接出现了点问题`;
 			}
 
 			responseMessage.error = true;
-			responseMessage.content = `Uh-oh! There was an issue connecting to Ollama.`;
+			responseMessage.content = `连接出现了点问题`;
 			responseMessage.done = true;
 			messages = messages;
 		}
@@ -286,6 +286,7 @@
 			window.scrollTo({ top: document.body.scrollHeight });
 		}
 
+		// 如果只有两条消息，并且第二条消息的内容不为空，则生成聊天标题
 		if (messages.length == 2 && messages.at(1).content !== "") {
 			window.history.replaceState(history.state, "", `/c/${_chatId}`);
 			await generateChatTitle(_chatId, userPrompt);
@@ -323,7 +324,7 @@
 			if (messages.length == 1) {
 				await $db.createNewChat({
 					id: _chatId,
-					title: "New Chat",
+					title: "新聊天",
 					models: selectedModels,
 					options: {
 						seed: $settings.seed ?? undefined,
@@ -369,6 +370,7 @@
 		}
 	};
 
+	// 获取分析接口，生成聊天标题
 	const generateChatTitle = async (_chatId, userPrompt) => {
 		if ($settings.titleAutoGenerate ?? true) {
 			console.log("generateChatTitle");
@@ -397,7 +399,7 @@
 				});
 
 			if (res) {
-				await setChatTitle(_chatId, res.response === "" ? "New Chat" : res.response);
+				await setChatTitle(_chatId, res.response === "" ? "新聊天" : res.response);
 			}
 		} else {
 			await setChatTitle(_chatId, `${userPrompt}`);

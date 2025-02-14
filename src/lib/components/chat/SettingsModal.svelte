@@ -106,7 +106,7 @@
 		while (true) {
 			const { value, done } = await reader.read();
 			if (done) break;
-
+			
 			try {
 				let lines = value.split("\n");
 

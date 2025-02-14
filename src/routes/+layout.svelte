@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>Ollama</title>
+	<title>海洋卫士AI客服</title>
 </svelte:head>
 
 <Toaster />

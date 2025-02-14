@@ -32,27 +32,27 @@
 			for (const message of messages) {
 				if (message.info) {
 					tippy(`#info-${message.id}`, {
-						content: `<span class="text-xs">令牌数: ${
+						content: `<span class="text-xs">token/s: ${
 							`${
 								Math.round(
 									((message.info.eval_count ?? 0) / (message.info.eval_duration / 1000000000)) * 100
 								) / 100
-							} 令牌` ?? "N/A"
+							} token` ?? "N/A"
 						}<br/>
 						总时长: ${
 							Math.round(((message.info.total_duration ?? 0) / 1000000) * 100) / 100 ?? "N/A"
-						}毫秒<br/>
+						}ms<br/>
 						加载时长: ${
 							Math.round(((message.info.load_duration ?? 0) / 1000000) * 100) / 100 ?? "N/A"
-						}毫秒<br/>
+						}ms<br/>
 						提示评估次数: ${message.info.prompt_eval_count ?? "N/A"}<br/>
 						提示评估时长: ${
 							Math.round(((message.info.prompt_eval_duration ?? 0) / 1000000) * 100) / 100 ?? "N/A"
-						}毫秒<br/>
+						}ms<br/>
 						评估次数: ${message.info.eval_count ?? "N/A"}<br/>
 						评估时长: ${
 							Math.round(((message.info.eval_duration ?? 0) / 1000000) * 100) / 100 ?? "N/A"
-						}毫秒</span>`,
+						}ms</span>`,
 						allowHTML: true
 					});
 				}
@@ -331,9 +331,9 @@
 	<div class="m-auto text-center max-w-md pb-56 px-2">
 		<div class="flex justify-center mt-8">
 			<img
-				src="/ollama.png"
+				src="/ai.png"
 				class=" w-16 invert-[10%] dark:invert-[100%] rounded-full"
-				alt="ollama"
+				alt="AI客服"
 				draggable="false"
 			/>
 		</div>
@@ -358,7 +358,7 @@
 							<img
 								src="/favicon.png"
 								class=" max-w-[28px] object-cover rounded-full"
-								alt="Ollama头像"
+								alt="AI客服头像"
 								draggable="false"
 							/>
 						{/if}
@@ -369,7 +369,7 @@
 							{#if message.role === "user"}
 								您
 							{:else}
-								Ollama <span class=" text-gray-500 text-sm font-medium"
+								AI客服 <span class=" text-gray-500 text-sm font-medium"
 									>{message.model ? ` ${message.model}` : ""}</span
 								>
 							{/if}

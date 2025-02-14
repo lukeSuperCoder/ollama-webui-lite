@@ -7,13 +7,14 @@
 	import { goto } from "$app/navigation";
 	import { db, chats, showSettings, chatId } from "$lib/stores";
 	import { onMount } from "svelte";
+	import toast from "svelte-french-toast";
 
 	let show = false;
 	let navElement;
 	let importFileInputElement;
 	let importFiles;
 
-	let title: string = "Ollama 网页用户界面";
+	let title: string = "网页用户界面";
 	let search = "";
 
 	let chatDeleteId = null;
@@ -67,9 +68,10 @@
 
 		let reader = new FileReader();
 		reader.onload = (event) => {
-			let chats = JSON.parse(event.target.result);
-			console.log(chats);
-			importChats(chats);
+			toast.success("上传成功");
+			// let chats = JSON.parse(event.target.result);
+			// console.log(chats);
+			// importChats(chats);
 		};
 
 		reader.readAsText(importFiles[0]);
@@ -96,7 +98,7 @@
 			>
 				<div class="flex self-center">
 					<div class="self-center mr-3.5">
-						<img src="/ollama.png" class=" w-5 invert-[100%] rounded-full" />
+						<img src="/ai.png" class=" w-5 invert-[100%] rounded-full" />
 					</div>
 
 					<div class=" self-center font-medium text-sm">新聊天</div>
@@ -374,7 +376,7 @@
 								/>
 							</svg>
 						</div>
-						<div class=" self-center">导入</div>
+						<div class=" self-center">上传</div>
 					</button>
 					<button
 						class=" flex rounded-md py-3 px-3.5 w-full hover:bg-gray-900 transition"
