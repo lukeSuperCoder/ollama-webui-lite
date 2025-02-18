@@ -13,7 +13,10 @@
 	import ModelSelector from "$lib/components/chat/ModelSelector.svelte";
 	import Navbar from "$lib/components/layout/Navbar.svelte";
 	import { page } from "$app/stores";
-
+	import Dialog from '$lib/components/layout/Dialog.svelte';
+	import Track from '$lib/components/handel/track.svelte'; // 导入track组件
+	import TrackReplay from '$lib/components/handel/trackReplay.svelte'; // 导入trackReplay组件
+	import Ship from '$lib/components/handel/ship.svelte'; // 导入ship组件
 	let stopResponseFlag = false;
 	let autoScroll = true;
 
@@ -41,6 +44,13 @@
 	} else {
 		messages = [];
 	}
+
+	let isDialogOpen = false;	// 是否打开对话框
+	let queryParams = {
+		type: "",
+		title: "",
+		mmsi: ""
+	};	// 对话框参数
 
 	onMount(async () => {
 		await chatId.set(uuidv4());
@@ -136,6 +146,35 @@
 			content: "",
 			model: model
 		};
+
+		const keywords = {
+			"轨迹回放": {
+				"startTime": new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7).toISOString().slice(0, 16),
+				"endTime": new Date().toISOString().slice(0, 16),
+				"mmsi": "477148800",
+				"type": "trackReplay",	
+				"title": "轨迹回放"
+			},
+			"轨迹": {
+				"startTime": new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7).toISOString().slice(0, 16),
+				"endTime": new Date().toISOString().slice(0, 16),
+				"mmsi": "477148800",
+				"type": "track",	
+				"title": "轨迹查询"
+			},
+			"船舶": {
+				"mmsi": "477148800",
+				"type": "ship",
+				"title": "船舶查询"
+			}
+		};
+
+		for (const keyword in keywords) {
+			if (userPrompt.includes(keyword)) {
+				openDialog(keywords[keyword]);
+				break;
+			}
+		}
 
 		history.messages[responseMessageId] = responseMessage;
 		history.currentId = responseMessageId;
@@ -412,6 +451,11 @@
 			title = _title;
 		}
 	};
+
+	const openDialog = (params) => {
+		isDialogOpen = true;
+		queryParams = params;
+	};
 </script>
 
 <svelte:window
@@ -441,3 +485,13 @@
 
 	<MessageInput bind:prompt bind:autoScroll {messages} {submitPrompt} {stopResponse} />
 </div>
+
+<Dialog bind:isOpen={isDialogOpen} title={queryParams.title}>
+	{#if queryParams.type === "trackReplay"}
+		<TrackReplay {...queryParams} />
+	{:else if queryParams.type === "track"}
+		<Track {...queryParams} />
+	{:else if queryParams.type === "ship"}
+		<Ship {...queryParams} />	
+	{/if}
+</Dialog>
