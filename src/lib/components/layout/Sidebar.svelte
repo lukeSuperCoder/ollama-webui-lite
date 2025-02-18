@@ -8,6 +8,7 @@
 	import { db, chats, showSettings, chatId } from "$lib/stores";
 	import { onMount } from "svelte";
 	import toast from "svelte-french-toast";
+	import Dialog from './Dialog.svelte';
 
 	let show = false;
 	let navElement;
@@ -23,6 +24,12 @@
 	let chatTitle = "";
 
 	let showDeleteHistoryConfirm = false;
+
+	let showDialog = false;
+	let workspaceName = "";
+	let workspaceType = "public"; // 默认选择公共知识库
+	let embeddingType = "default"; // 默认embedding类型
+	let description = "";
 
 	onMount(async () => {
 		if (window.innerWidth > 1280) {
@@ -63,15 +70,51 @@
 		saveAs(blob, `聊天导出-${Date.now()}.json`);
 	};
 
-	$: if (importFiles) {
-		console.log(importFiles);
+	function createNewKnowSpace() {
+		showDialog = true;
+	}
 
+	async function submitForm() {
+		const response = await fetch('/api/v1/knowledge_base/create', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				name: workspaceName,
+				type: workspaceType,
+				embedding_type: embeddingType,
+				description: description
+			})
+		});
+
+		if (response.ok) {
+			toast.success('创建成功');
+			showDialog = false;
+		} else {
+			// 处理错误情况
+			const errorData = await response.json();
+			toast.error(`创建失败: ${errorData.message}`);
+		}
+	}
+
+	$: if (importFiles) {
 		let reader = new FileReader();
-		reader.onload = (event) => {
-			toast.success("上传成功");
-			// let chats = JSON.parse(event.target.result);
-			// console.log(chats);
-			// importChats(chats);
+		reader.onload = async (event) => {
+			const response = await fetch('/api/v1/knowledge_base/1/upload', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: event.target.result
+			});
+
+			if (response.ok) {
+				toast.success("上传成功");
+			} else {
+				const errorData = await response.json();
+				toast.error(`上传失败: ${errorData.message}`);
+			}
 		};
 
 		reader.readAsText(importFiles[0]);
@@ -89,12 +132,6 @@
 		<div class="px-2.5 flex justify-center space-x-2">
 			<button
 				class="flex-grow flex justify-between rounded-md px-3 py-1.5 mt-2 hover:bg-gray-900 transition"
-				on:click={async () => {
-					goto("/");
-
-					await chatId.set(uuidv4());
-					// createNewChat();
-				}}
 			>
 				<div class="flex self-center">
 					<div class="self-center mr-3.5">
@@ -104,20 +141,41 @@
 					<div class=" self-center font-medium text-sm">新聊天</div>
 				</div>
 
-				<div class="self-center">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 20 20"
-						fill="currentColor"
-						class="w-4 h-4"
-					>
-						<path
-							d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z"
-						/>
-						<path
-							d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"
-						/>
-					</svg>
+				<div class="flex items-center">
+					<button on:click={async () => {
+						goto("/");
+	
+						await chatId.set(uuidv4());
+						// createNewChat();
+					}}>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+							class="w-4 h-4"
+						>
+							<path
+								d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z"
+							/>
+							<path
+								d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"
+							/>
+						</svg>
+					</button>
+					<button on:click={() => { 
+						createNewKnowSpace(); 
+					}} class="ml-2">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+							class="w-4 h-4"
+						>
+							<path
+								d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
+							/>
+						</svg>
+					</button>
 				</div>
 			</button>
 		</div>
@@ -376,7 +434,7 @@
 								/>
 							</svg>
 						</div>
-						<div class=" self-center">上传</div>
+						<div class=" self-center">上传文档</div>
 					</button>
 					<button
 						class=" flex rounded-md py-3 px-3.5 w-full hover:bg-gray-900 transition"
@@ -400,7 +458,7 @@
 								/>
 							</svg>
 						</div>
-						<div class=" self-center">导出</div>
+						<div class=" self-center">导出对话</div>
 					</button>
 				</div>
 				{#if showDeleteHistoryConfirm}
@@ -551,3 +609,41 @@
 		</button>
 	</div>
 </div>
+
+<Dialog isOpen={showDialog} title="创建知识库">
+	<form on:submit|preventDefault={submitForm} class="space-y-4">
+		<div>
+			<label for="name" class="block text-sm font-medium">知识库名称:</label>
+			<input type="text" id="name" bind:value={workspaceName} required placeholder="请输入知识库名称" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-500" />
+		</div>
+		<div>
+			<label for="type" class="block text-sm font-medium">知识库类型:</label>
+			<select id="type" bind:value={workspaceType} class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-500 max-h-40 overflow-y-auto">
+				<option value="public">公共知识库</option>
+				<option value="private">个人知识库</option>
+			</select>
+		</div>
+		<div>
+			<label for="embedding_type" class="block text-sm font-medium">Embedding类型:</label>
+			<select id="embedding_type" bind:value={embeddingType} class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-500 max-h-40 overflow-y-auto">
+				<option value="default">默认</option>
+			</select>
+		</div>
+		<div>
+			<label for="description" class="block text-sm font-medium">描述:</label>
+			<textarea id="description" bind:value={description} placeholder="请输入描述" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-500"></textarea>
+		</div>
+		<div class="dialog-actions">
+			<button type="button" on:click={() => (showDialog = false)} class="bg-gray-300 rounded-md px-4 py-2">取消</button>
+			<button type="submit" class="ml-2 bg-blue-500 text-white rounded-md px-4 py-2">提交</button>
+		</div>
+	</form>
+</Dialog>
+
+<style>
+	.dialog-actions {
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 10px;
+	}
+</style>
