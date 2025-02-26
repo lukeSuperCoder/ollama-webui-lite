@@ -101,23 +101,23 @@
 	$: if (importFiles) {
 		let reader = new FileReader();
 		reader.onload = async (event) => {
-			const response = await fetch('/api/v1/knowledge_base/1/upload', {
+			const formData = new FormData();
+			formData.append('file', new Blob([event.target.result]), importFiles[0].name);
+
+			const response = await fetch('/api/insert_file', {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: event.target.result
+				body: formData
 			});
 
 			if (response.ok) {
 				toast.success("上传成功");
 			} else {
 				const errorData = await response.json();
-				toast.error(`上传失败: ${errorData.message}`);
+				toast.error(`上传失败: ${errorData.detail}`);
 			}
 		};
 
-		reader.readAsText(importFiles[0]);
+		reader.readAsArrayBuffer(importFiles[0]);
 	}
 </script>
 

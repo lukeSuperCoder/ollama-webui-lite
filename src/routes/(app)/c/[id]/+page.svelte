@@ -2,7 +2,7 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import toast from 'svelte-french-toast';
 
-	import { OLLAMA_API_BASE_URL } from '$lib/constants';
+	import { OLLAMA_API_BASE_URL, RAG_API_BASE_URL } from '$lib/constants';
 	import { tick } from 'svelte';
 	import { convertMessagesToHistory, splitStream } from '$lib/utils';
 	import { goto } from '$app/navigation';
@@ -138,7 +138,7 @@
 		await Promise.all(
 			selectedModels.map(async (model) => {
 				console.log(model);
-				await sendPromptOllama(model, userPrompt, parentId, _chatId);			
+				await sendPromptRAG(model, userPrompt, parentId, _chatId);			
 			})
 		);
 
@@ -333,6 +333,164 @@
 			await generateChatTitle(_chatId, userPrompt);
 		}
 	};
+	
+	//lightrag 流式输出查询
+	const sendPromptRAG = async (model, userPrompt, parentId, _chatId) => {
+        console.log('sendPromptRAG');
+		let responseMessageId = uuidv4();
+		let responseMessage = {
+			parentId: parentId,
+			id: responseMessageId,
+			childrenIds: [],
+			role: 'assistant',
+			content: '',
+			model: model
+		};
+		history.messages[responseMessageId] = responseMessage;
+		history.currentId = responseMessageId;
+		if (parentId !== null) {
+			history.messages[parentId].childrenIds = [
+				...history.messages[parentId].childrenIds,
+				responseMessageId
+			];
+		}
+
+		await tick();
+		window.scrollTo({ top: document.body.scrollHeight });
+
+		const res = await fetch('/api/chat_stream', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				query: history.messages[parentId].content,	//当前输入内容
+				mode: 'mix', // 假设使用默认模式
+			})
+		}).catch((err) => {
+			console.log(err);
+			return null;
+		});
+		
+		if (res && res.ok) {
+			const reader = res.body.getReader();
+            const decoder = new TextDecoder('utf-8');
+
+			while (true) {
+				const { value, done } = await reader.read();
+				const chunk = decoder.decode(value, { stream: true });
+
+				// 如果流结束，或者停止响应标志，或者聊天ID不匹配，则结束流
+				if (done || stopResponseFlag || _chatId !== $chatId) {
+					responseMessage.done = true;
+					messages = messages;
+					break;
+				}
+
+				try {
+					let lines = chunk.split('\n');
+
+					for (const line of lines) {
+						if (line !== '') {
+							let data = JSON.parse(line);
+							
+							if (done == false) {
+								console.log(data.response);
+								if (responseMessage.content == '' && data.response == '\n') {
+									continue;
+								} else {
+									responseMessage.content += data.response;
+									messages = messages;
+								}
+							} else {
+								responseMessage.done = true;
+								responseMessage.context = data.response ?? null;
+								responseMessage.info = {
+									total_duration: data.total_duration,
+									load_duration: data.load_duration,
+									sample_count: data.sample_count,
+									sample_duration: data.sample_duration,
+									prompt_eval_count: data.prompt_eval_count,
+									prompt_eval_duration: data.prompt_eval_duration,
+									eval_count: data.eval_count,
+									eval_duration: data.eval_duration
+								};
+								messages = messages;
+
+								if ($settings.notificationEnabled && !document.hasFocus()) {
+									const notification = new Notification(
+										`Ollama - ${model}`,
+										{
+											body: responseMessage.content,
+											icon: '/favicon.png'
+										}
+									);
+								}
+
+								if ($settings.responseAutoCopy) {
+									copyToClipboard(responseMessage.content);
+								}
+							}
+						}
+					}
+				} catch (error) {
+					console.log(error);
+					if ('detail' in error) {
+						toast.error(error.detail);
+					}
+					break;
+				}
+
+				if (autoScroll) {
+					window.scrollTo({ top: document.body.scrollHeight });
+				}
+
+				await $db.updateChatById(_chatId, {
+					title: title === '' ? 'New Chat' : title,
+					models: selectedModels,
+					system: $settings.system ?? undefined,
+					options: {
+						seed: $settings.seed ?? undefined,
+						temperature: $settings.temperature ?? undefined,
+						repeat_penalty: $settings.repeat_penalty ?? undefined,
+						top_k: $settings.top_k ?? undefined,
+						top_p: $settings.top_p ?? undefined,
+						num_ctx: $settings.num_ctx ?? undefined,
+						...($settings.options ?? {})
+					},
+					messages: messages,
+					history: history
+				});
+			}
+		} else {
+			if (res !== null) {
+				const error = await res.json();
+				console.log(error);
+				if ('detail' in error) {
+					toast.error(error.detail);
+					responseMessage.content = error.detail;
+				} else {
+					toast.error(error.error);
+					responseMessage.content = error.error;
+				}
+			} else {
+				toast.error(`Uh-oh! There was an issue connecting to Ollama.`);
+				responseMessage.content = `Uh-oh! There was an issue connecting to Ollama.`;
+			}
+
+			responseMessage.error = true;
+			responseMessage.content = `Uh-oh! There was an issue connecting to Ollama.`;
+			responseMessage.done = true;
+			messages = messages;
+		}
+
+        responseMessage.done = true;
+        messages.push(responseMessage); // 将响应消息添加到消息列表
+        await tick();
+        if (autoScroll) {
+            window.scrollTo({ top: document.body.scrollHeight });
+        }
+    };
 
 	const submitPrompt = async (userPrompt) => {
 		const _chatId = JSON.parse(JSON.stringify($chatId));
@@ -448,6 +606,38 @@
 		}
 	};
 
+	const queryAPI = async (userQuery, mode = 'mix') => {
+		try {
+			const response = await fetch(`/api/query`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					query: userQuery,
+					mode: mode,
+				}),
+			});
+			if (!response.ok) {
+				const errorData = await response.json();
+				toast.error(errorData.detail || '请求失败');
+				throw new Error('请求失败');
+			}
+
+			const text = await response.text();
+			console.log('Raw response:', text);
+
+			const data = JSON.parse(text);
+			console.log('API data:', data);
+			return data.data;
+		} catch (error) {
+			console.error('API调用错误:', error);
+			toast.error('发生错误，请重试');
+		}
+	};
+
+	
+
 	const setChatTitle = async (_chatId, _title) => {
 		await $db.updateChatById(_chatId, { title: _title });
 		if (_chatId === $chatId) {
@@ -469,7 +659,6 @@
 			<div class="max-w-2xl mx-auto w-full px-3 md:px-0 mt-10">
 				<ModelSelector bind:selectedModels disabled={messages.length > 0} />
 			</div>
-
 			<div class=" h-full mt-10 mb-32 w-full flex flex-col">
 				<Messages
 					{selectedModels}
