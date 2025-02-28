@@ -9,7 +9,9 @@
 	import { onMount } from "svelte";
 	import toast from "svelte-french-toast";
 	import Dialog from './Dialog.svelte';
-
+	import GraphMl from '../common/GraphMl.svelte'; // Import the GraphMl component
+	import Document from '../common/Document.svelte'; // Import the Document component
+	import { apiKey } from "$lib/constants";
 	let show = false;
 	let navElement;
 	let importFileInputElement;
@@ -30,6 +32,9 @@
 	let workspaceType = "public"; // 默认选择公共知识库
 	let embeddingType = "default"; // 默认embedding类型
 	let description = "";
+
+	let showGraphDialog = false; // State to control the GraphMl dialog
+	let showDocumentDialog = false; // State to control the Document dialog
 
 	onMount(async () => {
 		if (window.innerWidth > 1280) {
@@ -78,7 +83,8 @@
 		const response = await fetch('/api/v1/knowledge_base/create', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				'x-api-key': apiKey // 添加apiKey
 			},
 			body: JSON.stringify({
 				name: workspaceName,
@@ -104,16 +110,24 @@
 			const formData = new FormData();
 			formData.append('file', new Blob([event.target.result]), importFiles[0].name);
 
-			const response = await fetch('/api/insert_file', {
+			const response = await fetch('/api/documents/upload', {
 				method: 'POST',
+				headers: {
+					'x-api-key': apiKey // 添加apiKey
+				},
 				body: formData
+			}).then(async (res) => {
+				if (!res.ok) throw await res.json();
+				return res.json();
+			}).catch((error) => {
+				if ("detail" in error) {
+					toast.error(error.detail);
+				}
 			});
-
-			if (response.ok) {
-				toast.success("上传成功");
+			if (response.status == "success") {
+				toast.success("上传" + importFiles[0].name + "成功 ,进程将在后台运行");
 			} else {
-				const errorData = await response.json();
-				toast.error(`上传失败: ${errorData.detail}`);
+				toast.error(`上传失败: ${response.message}`);
 			}
 		};
 
@@ -162,7 +176,7 @@
 							/>
 						</svg>
 					</button>
-					<button on:click={() => { 
+					<!-- <button on:click={() => { 
 						createNewKnowSpace(); 
 					}} class="ml-2">
 						<svg
@@ -175,7 +189,7 @@
 								d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
 							/>
 						</svg>
-					</button>
+					</button> -->
 				</div>
 			</button>
 		</div>
@@ -547,7 +561,7 @@
 						<span>清除对话</span>
 					</button>
 				{/if}
-				<button
+				<!-- <button
 					class=" flex rounded-md py-3 px-3.5 w-full hover:bg-gray-900 transition"
 					on:click={async () => {
 						await showSettings.set(true);
@@ -575,6 +589,64 @@
 						</svg>
 					</div>
 					<div class=" self-center font-medium">设置</div>
+				</button> -->
+				<!-- <button
+					class=" flex rounded-md py-3 px-3.5 w-full hover:bg-gray-900 transition"
+					on:click={() => {
+						showGraphDialog = true; // Open the GraphMl dialog
+					}}
+				>
+					<div class=" self-center mr-3">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="w-5 h-5"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
+							/>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+							/>
+						</svg>
+					</div>
+					<div class=" self-center font-medium">展示图谱</div>
+				</button> -->
+				<button
+					class=" flex rounded-md py-3 px-3.5 w-full hover:bg-gray-900 transition"
+					on:click={() => {
+						showDocumentDialog = true; // Open the Document dialog
+					}}
+				>
+					<div class=" self-center mr-3">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="w-5 h-5"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M7 2h10a2 2 0 012 2v16a2 2 0 01-2 2H7a2 2 0 01-2-2V4a2 2 0 012-2z"
+							/>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M7 6h10M7 10h10M7 14h10M7 18h10"
+							/>
+						</svg>
+					</div>
+					<div class=" self-center">查看文件</div>
 				</button>
 			</div>
 		</div>
@@ -608,6 +680,14 @@
 			</span>
 		</button>
 	</div>
+
+	<Dialog isOpen={showGraphDialog} title="图谱展示" onClose={() => (showGraphDialog = false)}>
+		<GraphMl /> <!-- Display the GraphMl component -->
+	</Dialog>
+
+	<Dialog isOpen={showDocumentDialog} title="文档查看" onClose={() => (showDocumentDialog = false)}>
+		<Document /> <!-- Display the Document component -->
+	</Dialog>
 </div>
 
 <Dialog isOpen={showDialog} title="创建知识库">

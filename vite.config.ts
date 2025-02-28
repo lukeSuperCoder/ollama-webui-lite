@@ -11,7 +11,7 @@ export default defineConfig({
 		},
 		proxy: {
 			'/api': {
-				target: 'http://127.0.0.1:8020', // 代理目标地址
+				target: 'http://120.46.94.104:9621', // 代理目标地址
 				changeOrigin: true, // 是否改变源
 				rewrite: (path) => path.replace(/^\/api/, ''), // 重写路径
 			}

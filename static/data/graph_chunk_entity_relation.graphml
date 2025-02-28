@@ -1,0 +1,293 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d2" for="node" attr.name="source_id" attr.type="string" />
+  <key id="d1" for="node" attr.name="description" attr.type="string" />
+  <key id="d0" for="node" attr.name="entity_type" attr.type="string" />
+  <graph edgedefault="undirected">
+    <node id="&quot;COVID-19&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"The outbreak of COVID-19 was significant for all countries worldwide."</data>
+      <data key="d2">chunk-b45cffe084dd3d20d928bee85e7b0f21</data>
+    </node>
+    <node id="&quot;MARCH 2020&quot;">
+      <data key="d0">"DATE"</data>
+      <data key="d1">"This event occurred in March 2020."</data>
+      <data key="d2">chunk-b45cffe084dd3d20d928bee85e7b0f21</data>
+    </node>
+    <node id="&quot;CENTERS FOR DISEASE CONTROL AND PREVENTION&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"The CDC played a crucial role in managing the health crisis."</data>
+      <data key="d2">chunk-b45cffe084dd3d20d928bee85e7b0f21</data>
+    </node>
+    <node id="&quot;北京市军工保密资格认定工作保密知识测试试卷（A 卷）&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"这是一个关于国家秘密管理的知识测试卷，主要涉及中国北京市的军工单位。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;国家机关、单位&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"这些是中国政府机构和组织，在这卷测试中涉及到对产生的国家秘密进行分类和管理。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;国家秘密&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"这是指由中国政府认定的机密信息，需要按照规定进行处理和保护。"&lt;SEP&gt;"高度机密且受严格法律保护的信息，仅限授权人员访问和使用"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc&lt;SEP&gt;chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;最高密级&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"指的是安全等级最高的机密信息级别。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;最长保密期限&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"指的是国家秘密信息需要被保护的最长时间。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;涉密人员&quot;">
+      <data key="d0">"PERSON"</data>
+      <data key="d1">"这些是接触、知悉、管理或掌握国家秘密的工作人员。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;连接互联网的计算机&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"指可以访问公共网络的计算机，这在保密环境中是禁止使用的。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;物理隔离&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"指的是为了保护敏感信息而采取的实际分隔措施。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;信息化管理部门&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"负责管理单位内部信息技术资源和系统的部门。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;格式化与重装操作系统&quot;">
+      <data key="d0">"ACTIVITY"</data>
+      <data key="d1">"可能涉及到清除或更改计算机系统，这在保密环境中是严格限制的。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;刑法第一百一十一条&quot;">
+      <data key="d0">"LAW"</data>
+      <data key="d1">"这条法律内容关于危害国家秘密安全的行为和相应的刑罚。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;纸介质、光介质、电磁介质等载体&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"指存储信息的不同物理媒介。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;最小化、精准化原则&quot;">
+      <data key="d0">"CONCEPT"</data>
+      <data key="d1">"在确定密级时，确保保护所需的最低信息量和最精确的时间限制。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;年度自检&quot;">
+      <data key="d0">"ACTIVITY"</data>
+      <data key="d1">"单位每年进行的自我评估以确保符合保密标准。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;暂停、撤销保密资格证书&quot;">
+      <data key="d0">"ACTION"</data>
+      <data key="d1">"针对未遵守规定的单位采取的管理行动。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;保密责任、归口管理、保密组织机构等6个方面的内容&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"《武器装备科研生产单位保密资格标准》中的六个关键领域。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;保密资格认定工作&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"保密资格认定工作是指对军工单位进行的国家安全秘密管理和保护资格评定的过程。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;涉密信息系统&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"指包含或处理国家秘密信息的信息系统，需要采取特别的安全防护措施。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;安全技术程序、管理程序&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"安全技术程序通常指的是为保护信息安全而实施的技术控制和策略；管理程序则涉及对系统的管理和控制，确保按照规定执行相关操作。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;区域隔离、出入口控制、入侵报警、视频监控等技防措施&quot;">
+      <data key="d0">"ACTIVITY"</data>
+      <data key="d1">"这些是用于加强物理空间安全的措施，比如在保密要害部位实施的分区保护，进出管理，入侵检测以及视频监控系统，以防止未经授权的访问和信息泄露。"</data>
+      <data key="d2">chunk-d4f29fbb633c2cbed5ef99f8e64566f4</data>
+    </node>
+    <node id="&quot;北京市军工保密资格认定工作保密知识测试试卷（B 卷）&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"一个关于北京市军工单位保密资格认定的测试活动。主要关注在不同计算机使用、存储、处理涉密信息的规则，以及对外发布信息的审查和审批程序。同时强调了对保密要害部门、互联网及其他公共网络传递国家秘密的限制，并涉及对非法业务的处罚。文中还提到了对取得保密资格单位发生重大变化时的重新申请要求及对在申报过程中隐瞒重要情况或提供虚假材料的处理方式，以及进入涉密岗位人员的安全审查和培训。测试还包括了国家秘密载体管理、保密范围控制和审批程序，以及涉密信息系统、设备和存储设备的信息导入导出流程。"&lt;SEP&gt;"保密资格认定测试活动的名称"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;涉密计算机&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"特定的计算设备用于处理或存储敏感信息，要求隔离保护以防止未授权访问"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;非涉密计算机&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"用于一般用途、不包含敏感数据和程序，通常无需额外的安全措施"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;移动存储介质&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"可以便携地传输数据的设备或技术，包括U盘、SD卡等"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;涉密信息&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"包含敏感数据和信息的资料，在特定情况下需要严格保护以防止泄露"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;外单位人员&quot;">
+      <data key="d0">"PERSON"</data>
+      <data key="d1">"来自不同机构或组织的个体，可能参与特定任务或活动"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;旁站&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"指对某一过程进行现场监督，通常在敏感操作时确保合规性与安全"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;高密级涉密移动存储介质&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"用于存储高度敏感信息的设备，访问和使用有严格限制"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;低密级涉密计算机&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"处理较低敏感度的信息，但仍需遵循特定的安全规程"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;保密审查和审批&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"确认安全、合法地进行信息处理或分享的正式程序"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;机关、单位日常工作中产生的绝密级国家秘密&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"涉及国家安全或重要利益的敏感信息，必须严格管理"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;保密违法行为&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"违反保密法相关规定的行为，可能包括未经授权处理机密信息等"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;重新申请保密资格&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"当单位情况发生重大变化时，需要重新提交并获取保密资质的过程"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;隐瞒重要情况或提供虚假材料&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"在申请过程中故意不披露关键信息或提供错误数据的行为"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;审查和培训&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"评估个人是否符合相关标准及对人员进行安全意识教育的程序"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;国家秘密载体&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"承载国家机密信息的具体物质，包括文件、磁盘等"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;知悉国家秘密&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"了解并可能处理国家机密信息的过程或权限"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;审批程序&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"正式的程序以确保特定操作在合规框架内进行，通常涉及审核和批准"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;相对集中管理&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"将敏感数据和资源置于统一的安全管理体系下，以便更好地控制与保护"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;北京市军工保密资格认定办公室&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"负责实施和监管涉密单位的保密资格认定工作，是管理机构"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;互联网&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"指用于公众访问、通信和信息交换的全球互联网络系统"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;其他公共信息网络&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"除了官方授权系统之外的任何允许公众接入的信息处理平台或服务"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;有限和无线通信&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"通过有限或无限频谱传输语音、数据或其他形式信号的沟通方式，可能涉及国家秘密的安全风险"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;停业&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"单位因违法行为被要求停止运营并接受纠正的过程"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;没收违法所得&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"对违反法律规定的单位处以财务处罚的方式之一，通常包括收回不法收入"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;涉密岗位人员&quot;">
+      <data key="d0">"PERSON"</data>
+      <data key="d1">"具体执行涉密任务的工作人员，需要接受严格的安全审查和培训"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;重新申请保密资格证书&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"在特定情况下，单位可能需要提交额外材料或满足新标准以恢复其原有安全资质的过程"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;资本构成、单位性质、涉密场所发生重大变化&quot;">
+      <data key="d0">"CATEGORY"</data>
+      <data key="d1">"描述与单位运营环境相关的显著改变，影响其继续维持保密资格的能力"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;30个工作日内重新申请&quot;">
+      <data key="d0">"TIMEFRAME"</data>
+      <data key="d1">"特定情况下，当单位关键信息或结构发生变化时需要提交申请的时间限制"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;隐瞒重要情况或提供虚假材料1年内不受理申请&quot;">
+      <data key="d0">"PENALTY"</data>
+      <data key="d1">"对于在申请过程中故意误导行为的惩罚措施"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;审查和培训过程&quot;">
+      <data key="d0">"EVENT"</data>
+      <data key="d1">"确保个人具备处理敏感信息能力的正式评估及教育步骤"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;国家秘密审批程序&quot;">
+      <data key="d0">"PROCESS"</data>
+      <data key="d1">"官方机构用于确认机密性、授权访问或使用特定数据的正式流程"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;信息导入导出审批程序&quot;">
+      <data key="d0">"PROCESS"</data>
+      <data key="d1">"确保在安全控制范围内，敏感信息被转移时必须遵循的安全规定"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+    <node id="&quot;机关、单位日常工作中产生、传递、使用和管理绝密级或较多机密级、秘密级国家秘密的内设机构称为保密要害部门。&quot;">
+      <data key="d0">"ORGANIZATION"</data>
+      <data key="d1">"机关或单位中负责处理绝密或高级别涉密信息的核心部门，需遵循严格的保密规定和程序。"</data>
+      <data key="d2">chunk-0652e3ffb02be7cccacc22ecd1a460bc</data>
+    </node>
+  </graph>
+</graphml>

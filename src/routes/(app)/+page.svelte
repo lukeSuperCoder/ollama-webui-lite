@@ -2,7 +2,7 @@
 	import { v4 as uuidv4 } from "uuid";
 	import toast from "svelte-french-toast";
 
-	import { OLLAMA_API_BASE_URL } from "$lib/constants";
+	import { OLLAMA_API_BASE_URL, apiKey } from "$lib/constants";
 	import { onMount, tick } from "svelte";
 	import { splitStream } from "$lib/utils";
 
@@ -191,7 +191,8 @@
 		const res = await fetch(`${$settings?.API_BASE_URL ?? OLLAMA_API_BASE_URL}/chat`, {
 			method: "POST",
 			headers: {
-				"Content-Type": "text/event-stream"
+				"Content-Type": "text/event-stream",
+				"x-api-key": apiKey
 			},
 			body: JSON.stringify({
 				model: model,
@@ -356,10 +357,11 @@
 		await tick();
 		window.scrollTo({ top: document.body.scrollHeight });
 
-		const res = await fetch('/api/query_stream', {
+		const res = await fetch('/api/query/stream', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				'x-api-key': apiKey
 			},
 			body: JSON.stringify({
 				query: history.messages[parentId].content,	//当前输入内容
@@ -392,7 +394,7 @@
 						if (line !== '') {
 							let data = JSON.parse(line);
 							
-							if (data.done == false) {
+							if (done == false) {
 								console.log(data.response);
 								if (responseMessage.content == '' && data.response == '\n') {
 									continue;
@@ -444,7 +446,7 @@
 				}
 
 				await $db.updateChatById(_chatId, {
-					title: title === '' ? 'New Chat' : title,
+					title: title === '' ? '新聊天' : title,
 					models: selectedModels,
 					system: $settings.system ?? undefined,
 					options: {
@@ -575,7 +577,8 @@
 			const res = await fetch(`${$settings?.API_BASE_URL ?? OLLAMA_API_BASE_URL}/generate`, {
 				method: "POST",
 				headers: {
-					"Content-Type": "text/event-stream"
+					"Content-Type": "text/event-stream",
+					"x-api-key": apiKey
 				},
 				body: JSON.stringify({
 					model: selectedModels[0],
@@ -625,9 +628,9 @@
 <Navbar {title} />
 <div class="min-h-screen w-full flex justify-center">
 	<div class=" py-2.5 flex flex-col justify-between w-full">
-		<div class="max-w-2xl mx-auto w-full px-3 md:px-0 mt-10">
+		<!-- <div class="max-w-2xl mx-auto w-full px-3 md:px-0 mt-10">
 			<ModelSelector bind:selectedModels disabled={messages.length > 0} />
-		</div>
+		</div> -->
 
 		<div class=" h-full mt-10 mb-32 w-full flex flex-col">
 			<Messages

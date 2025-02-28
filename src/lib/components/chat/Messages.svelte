@@ -369,9 +369,10 @@
 							{#if message.role === "user"}
 								您
 							{:else}
-								AI客服 <span class=" text-gray-500 text-sm font-medium"
+								AI客服 
+								<!-- <span class=" text-gray-500 text-sm font-medium"
 									>{message.model ? ` ${message.model}` : ""}</span
-								>
+								> -->
 							{/if}
 						</div>
 

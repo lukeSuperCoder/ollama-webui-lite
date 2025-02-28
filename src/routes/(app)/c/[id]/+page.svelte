@@ -2,7 +2,7 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import toast from 'svelte-french-toast';
 
-	import { OLLAMA_API_BASE_URL, RAG_API_BASE_URL } from '$lib/constants';
+	import { OLLAMA_API_BASE_URL, apiKey } from '$lib/constants';
 	import { tick } from 'svelte';
 	import { convertMessagesToHistory, splitStream } from '$lib/utils';
 	import { goto } from '$app/navigation';
@@ -173,7 +173,8 @@
 			method: 'POST',
 			headers: {
 				'Content-Type': 'text/event-stream',
-				...($settings.authHeader && { Authorization: $settings.authHeader })
+				...($settings.authHeader && { Authorization: $settings.authHeader }),
+				'x-api-key': apiKey // Added apiKey here
 			},
 			body: JSON.stringify({
 				model: model,
@@ -284,7 +285,7 @@
 				}
 
 				await $db.updateChatById(_chatId, {
-					title: title === '' ? 'New Chat' : title,
+					title: title === '' ? '新聊天' : title,
 					models: selectedModels,
 					system: $settings.system ?? undefined,
 					options: {
@@ -358,10 +359,11 @@
 		await tick();
 		window.scrollTo({ top: document.body.scrollHeight });
 
-		const res = await fetch('/api/chat_stream', {
+		const res = await fetch('/api/query/stream', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				'x-api-key': apiKey // Added apiKey here
 			},
 			body: JSON.stringify({
 				query: history.messages[parentId].content,	//当前输入内容
@@ -446,7 +448,7 @@
 				}
 
 				await $db.updateChatById(_chatId, {
-					title: title === '' ? 'New Chat' : title,
+					title: title === '' ? '新聊天' : title,
 					models: selectedModels,
 					system: $settings.system ?? undefined,
 					options: {
@@ -523,7 +525,7 @@
 			if (messages.length == 1) {
 				await $db.createNewChat({
 					id: _chatId,
-					title: 'New Chat',
+					title: '新聊天',
 					models: selectedModels,
 					system: $settings.system ?? undefined,
 					options: {
@@ -578,7 +580,8 @@
 				method: 'POST',
 				headers: {
 					'Content-Type': 'text/event-stream',
-					...($settings.authHeader && { Authorization: $settings.authHeader })
+					...($settings.authHeader && { Authorization: $settings.authHeader }),
+					'x-api-key': apiKey // Added apiKey here
 				},
 				body: JSON.stringify({
 					model: selectedModels[0],
@@ -599,7 +602,7 @@
 				});
 
 			if (res) {
-				await setChatTitle(_chatId, res.response === '' ? 'New Chat' : res.response);
+				await setChatTitle(_chatId, res.response === '' ? '新聊天' : res.response);
 			}
 		} else {
 			await setChatTitle(_chatId, `${userPrompt}`);
@@ -612,6 +615,7 @@
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
+					'x-api-key': apiKey // Added apiKey here
 				},
 				body: JSON.stringify({
 					query: userQuery,
@@ -636,8 +640,6 @@
 		}
 	};
 
-	
-
 	const setChatTitle = async (_chatId, _title) => {
 		await $db.updateChatById(_chatId, { title: _title });
 		if (_chatId === $chatId) {
@@ -656,9 +658,9 @@
 	<Navbar {title} shareEnabled={messages.length > 0} />
 	<div class="min-h-screen w-full flex justify-center">
 		<div class=" py-2.5 flex flex-col justify-between w-full">
-			<div class="max-w-2xl mx-auto w-full px-3 md:px-0 mt-10">
+			<!-- <div class="max-w-2xl mx-auto w-full px-3 md:px-0 mt-10">
 				<ModelSelector bind:selectedModels disabled={messages.length > 0} />
-			</div>
+			</div> -->
 			<div class=" h-full mt-10 mb-32 w-full flex flex-col">
 				<Messages
 					{selectedModels}

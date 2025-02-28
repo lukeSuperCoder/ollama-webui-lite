@@ -1,9 +1,11 @@
 <script>
     export let isOpen = false;
-    export let title; // 将title设为传入的参数
+    export let title = '';
+    export let onClose = () => {}; // 接收一个关闭回调函数
 
     const closeDialog = () => {
         isOpen = false;
+        onClose(); // 调用传入的回调函数
     };
 </script>
 
@@ -14,12 +16,14 @@
         left: 0;
         width: 100%;
         height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 1000;
     }
     .dialog {
+        color: #000;
         background-color: white;
         padding: 20px;
         border-radius: 8px;
@@ -61,7 +65,7 @@
 </style>
 
 {#if isOpen}
-    <div class="dialog-backdrop">
+    <div class="dialog-backdrop" on:click={closeDialog} hidden={!isOpen}>
         <div class="dialog" on:click|stopPropagation>
             <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px;">
                 <h2>{title}</h2>
